@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saas-Bahu Harmony | सास-बहू सामंजस्य</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;500;600&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --saffron:#E8721C;--saffron-light:#FDF0E8;
+  --rose:#C0385A;--rose-light:#FCF0F3;
+  --gold:#C9940A;--gold-light:#FDF6E3;
+  --green:#2D7A4F;--green-light:#EBF5EF;
+  --teal:#1A7A6E;--teal-light:#E8F5F3;
+  --bg:#FFFDF9;--bg2:#F9F5EF;
+  --border:#EAE0D0;--text:#2C1A0E;
+  --muted:#8B7355;--hint:#C4B49A;
+  --serif:'Playfair Display',serif;
+  --sans:'Nunito',sans-serif;
+  --hindi:'Tiro Devanagari Hindi',serif;
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh}
+
+/* Hindi font applies when lang=hi */
+.hn, .hn * { font-family: var(--hindi) !important; }
+
+.app-header{background:var(--bg);border-bottom:1px solid var(--border);padding:0 14px;position:sticky;top:0;z-index:20}
+.header-inner{max-width:700px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:54px;gap:8px}
+.logo{font-family:var(--serif);font-size:16px;color:var(--rose);display:flex;align-items:center;gap:6px;flex-shrink:0}
+.logo-dot{width:7px;height:7px;border-radius:50%;background:var(--saffron)}
+.nav-pills{display:flex;gap:3px}
+.pill{font-size:11px;padding:5px 10px;border-radius:999px;cursor:pointer;border:none;background:none;color:var(--muted);font-family:var(--sans);font-weight:500;transition:all .18s;white-space:nowrap}
+.pill.active{background:var(--rose-light);color:var(--rose)}
+.lang-toggle{display:flex;background:var(--bg2);border:1px solid var(--border);border-radius:999px;padding:2px;flex-shrink:0}
+.lang-btn{padding:4px 10px;border-radius:999px;border:none;cursor:pointer;font-size:11px;font-weight:600;background:none;color:var(--muted);transition:all .18s;font-family:var(--sans)}
+.lang-btn.active{background:var(--saffron);color:white}
+
+.screen{display:none;max-width:700px;margin:0 auto;padding:16px}
+.screen.active{display:block}
+
+.hero{background:var(--rose-light);border:1px solid #F2C4CF;border-radius:16px;padding:20px;margin-bottom:16px;display:flex;gap:14px;align-items:center}
+.hero-motif{font-size:38px;flex-shrink:0}
+.hero-title{font-size:19px;color:var(--rose);line-height:1.35;margin-bottom:4px}
+.hero-sub{font-size:12px;color:var(--muted);line-height:1.5}
+
+.persona-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.persona-card{border:1.5px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;text-align:center;transition:all .2s;background:var(--bg)}
+.persona-card.sel-saas{border-color:var(--saffron);background:var(--saffron-light)}
+.persona-card.sel-bahu{border-color:var(--rose);background:var(--rose-light)}
+.persona-emoji{font-size:26px;margin-bottom:6px}
+.persona-name{font-size:15px;font-weight:600;margin-bottom:2px}
+.persona-desc{font-size:11px;color:var(--muted)}
+
+.sec-title{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--hint);margin:16px 0 9px}
+.card{background:var(--bg);border:1px solid var(--border);border-radius:13px;padding:14px;margin-bottom:10px}
+.card-green{background:var(--green-light);border-color:#B8DCCA}
+.card-amber{background:var(--gold-light);border-color:#F0D9A0}
+.card-rose{background:var(--rose-light);border-color:#F2C4CF}
+.card-teal{background:var(--teal-light);border-color:#A8D9D4}
+.card-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:6px}
+.card-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.card-title{font-size:13px;font-weight:600;margin-bottom:2px}
+.card-sub{font-size:12px;color:var(--muted);line-height:1.5}
+.card-body{font-size:13px;line-height:1.6}
+
+.wisdom-list{display:flex;flex-direction:column;gap:7px}
+.wisdom-item{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;background:var(--bg2);border:1px solid var(--border)}
+.wisdom-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:6px}
+.wisdom-text{font-size:13px;line-height:1.55}
+
+.tip-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tip-item{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px;cursor:pointer;transition:all .2s}
+.tip-item:hover{border-color:var(--hint)}
+.tip-emoji{font-size:20px;margin-bottom:6px}
+.tip-label{font-size:12px;font-weight:600;margin-bottom:2px}
+.tip-desc{font-size:11px;color:var(--muted)}
+
+.chat-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:13px;padding:13px;margin-bottom:10px}
+.chat-msgs{display:flex;flex-direction:column;gap:10px;min-height:130px;margin-bottom:10px}
+.msg{max-width:88%;padding:10px 13px;border-radius:12px;font-size:13px;line-height:1.65}
+.msg-ai{background:var(--bg);border:1px solid var(--border);border-radius:12px 12px 12px 3px;align-self:flex-start}
+.msg-user{background:var(--rose);color:white;border-radius:12px 12px 3px 12px;align-self:flex-end}
+.msg-ai .who{font-size:10px;font-weight:700;color:var(--rose);margin-bottom:3px;letter-spacing:.05em;font-family:var(--sans)!important}
+.chat-input-row{display:flex;gap:7px}
+.chat-in{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 13px;font-size:13px;font-family:var(--sans);color:var(--text);outline:none;resize:none;min-height:40px;transition:border-color .2s}
+.chat-in:focus{border-color:var(--rose)}
+.chat-send{width:40px;height:40px;border-radius:10px;background:var(--rose);border:none;color:white;cursor:pointer;font-size:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:opacity .2s}
+.chat-send:disabled{opacity:.4;cursor:not-allowed}
+
+.ethics-ta{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 13px;font-size:13px;font-family:var(--sans);color:var(--text);outline:none;resize:vertical;min-height:72px;transition:border-color .2s}
+.ethics-ta:focus{border-color:var(--saffron)}
+.check-btn{width:100%;padding:11px;border-radius:10px;background:var(--saffron);border:none;color:white;font-size:13px;font-weight:600;font-family:var(--sans);cursor:pointer;margin-top:8px;transition:opacity .2s}
+.check-btn:disabled{opacity:.4}
+.result-card{border-radius:12px;padding:13px;margin-top:10px;border:1px solid}
+.result-ethical{background:var(--green-light);border-color:#B8DCCA}
+.result-caution{background:var(--gold-light);border-color:#F0D9A0}
+.result-concern{background:#FEF0F0;border-color:#F5C4C4}
+.result-label{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:6px}
+.result-text{font-size:13px;line-height:1.6}
+
+.thinking-bar{height:2px;background:linear-gradient(90deg,transparent,var(--rose),transparent);background-size:200%;animation:shimmer 1.2s infinite;border-radius:2px;margin-bottom:8px}
+@keyframes shimmer{0%{background-position:200%}100%{background-position:-200%}}
+.dt-wrap{display:flex;gap:3px;align-items:center;padding:6px 0}
+.dt{width:5px;height:5px;border-radius:50%;background:var(--hint);animation:pop .7s infinite}
+.dt:nth-child(2){animation-delay:.15s}
+.dt:nth-child(3){animation-delay:.3s}
+@keyframes pop{0%,80%,100%{transform:scale(1);opacity:.5}40%{transform:scale(1.4);opacity:1}}
+
+.btn-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.btn{padding:9px 15px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:var(--sans);transition:all .18s}
+.btn-primary{background:var(--rose);border-color:var(--rose);color:white}
+.quick-q{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;background:var(--bg2);border:1px solid var(--border);cursor:pointer;font-size:12px;margin-bottom:7px;transition:border-color .2s}
+.quick-q:hover{border-color:var(--hint)}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="header-inner">
+    <div class="logo"><span class="logo-dot"></span><span id="logo-text">Saas–Bahu Harmony</span></div>
+    <div class="nav-pills">
+      <button class="pill active" onclick="go('home',this)" id="nav-home">Home</button>
+      <button class="pill" onclick="go('guide',this)" id="nav-guide">Guidance</button>
+      <button class="pill" onclick="go('ethics',this)" id="nav-ethics">Ethics</button>
+      <button class="pill" onclick="go('chat',this)" id="nav-chat">Ask AI</button>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+      <button class="lang-btn" onclick="setLang('hi',this)">हिंदी</button>
+    </div>
+  </div>
+</div>
+
+<!-- HOME -->
+<div class="screen active" id="s-home">
+  <div class="hero">
+    <div class="hero-motif">🪷</div>
+    <div>
+      <div class="hero-title" id="hero-title" style="font-family:var(--serif);font-style:italic">A home grows stronger when two hearts choose understanding.</div>
+      <div class="hero-sub" id="hero-sub">Guidance for Saas and Bahu — honest, warm, and culturally aware.</div>
+    </div>
+  </div>
+
+  <div class="sec-title" id="lbl-role">Who are you today?</div>
+  <div class="persona-row">
+    <div class="persona-card" id="pc-saas" onclick="selectPersona('saas')">
+      <div class="persona-emoji">👵🏽</div>
+      <div class="persona-name" id="lbl-saas-name">Saas</div>
+      <div class="persona-desc" id="lbl-saas-desc">Mother-in-law</div>
+    </div>
+    <div class="persona-card" id="pc-bahu" onclick="selectPersona('bahu')">
+      <div class="persona-emoji">👩🏽</div>
+      <div class="persona-name" id="lbl-bahu-name">Bahu</div>
+      <div class="persona-desc" id="lbl-bahu-desc">Daughter-in-law</div>
+    </div>
+  </div>
+  <div id="persona-prompt" style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:14px">Select your role to get personalised guidance</div>
+
+  <div class="sec-title" id="lbl-foundation">Foundation of harmony</div>
+  <div class="card card-green">
+    <div class="card-head">
+      <div class="card-icon" style="background:#B8DCCA">💚</div>
+      <div>
+        <div class="card-title" id="f1-title">Respect flows both ways</div>
+        <div class="card-sub" id="f1-sub">The bond is strongest when both feel seen — not just tolerated.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <div class="card-head">
+      <div class="card-icon" style="background:#A8D9D4">🕊️</div>
+      <div>
+        <div class="card-title" id="f2-title">Conflict is normal. Contempt is not.</div>
+        <div class="card-sub" id="f2-sub">Disagreements can build understanding. Resentment only builds walls.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card card-amber">
+    <div class="card-head">
+      <div class="card-icon" style="background:#F0D9A0">🌱</div>
+      <div>
+        <div class="card-title" id="f3-title">She is family — not a guest, not a servant.</div>
+        <div class="card-sub" id="f3-sub">A Bahu is a new member of the family — not a test to pass.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title" id="lbl-quick">Quick wisdom</div>
+  <div class="tip-grid">
+    <div class="tip-item" onclick="go('guide',document.getElementById('nav-guide'))">
+      <div class="tip-emoji">📖</div>
+      <div class="tip-label" id="t1-label">Daily guidance</div>
+      <div class="tip-desc" id="t1-desc">Dos and don'ts for both</div>
+    </div>
+    <div class="tip-item" onclick="go('ethics',document.getElementById('nav-ethics'))">
+      <div class="tip-emoji">⚖️</div>
+      <div class="tip-label" id="t2-label">Ethics check</div>
+      <div class="tip-desc" id="t2-desc">Is this behaviour okay?</div>
+    </div>
+    <div class="tip-item" onclick="go('chat',document.getElementById('nav-chat'))">
+      <div class="tip-emoji">💬</div>
+      <div class="tip-label" id="t3-label">Ask the guide</div>
+      <div class="tip-desc" id="t3-desc">Talk to AI about your situation</div>
+    </div>
+    <div class="tip-item" onclick="loadWisdom()">
+      <div class="tip-emoji">✨</div>
+      <div class="tip-label" id="t4-label">Today's wisdom</div>
+      <div class="tip-desc" id="t4-desc">A reflection to carry with you</div>
+    </div>
+  </div>
+  <div id="wisdom-card" style="margin-top:10px"></div>
+</div>
+
+<!-- GUIDANCE -->
+<div class="screen" id="s-guide">
+  <div style="margin-bottom:14px">
+    <div style="font-family:var(--serif);font-size:19px;color:var(--rose);margin-bottom:3px" id="guide-title">Daily Guidance</div>
+    <div style="font-size:12px;color:var(--muted)"><span id="guide-for">Personalised for</span> <span id="guide-persona-label" style="color:var(--saffron);font-weight:600">everyone</span></div>
+  </div>
+
+  <div class="sec-title" id="g-saas-do-title">What a Saas can do ✅</div>
+  <div class="wisdom-list">
+    <div class="wisdom-item"><div class="wisdom-dot" style="background:var(--green)"></div><div class="wisdom-text" id="sd1">Give her space to run the home her own way. Your way was right for your time — hers can be right for hers.</div></div>
+    <div class="wisdom-item"><div class="wisdom-dot" style="background:var(--green)"></div><div class="wisdom-text" id="sd2">Celebrate her small efforts — a meal cooked, a festival prepared. Recognition costs nothing and builds everything.</div></div>
+    <div class="wisdom-item"><div class="wisdom-dot" style="background:var(--green)"></div><div class="wisdom-text" id="sd3">Ask "how was your day?" genuinely. Be the mother she may not have had access to.</div></div>
+    <div class="wisdom-item"><div class="wisdom-dot" style="background:var(--green)"></div><div class="wisdom-text" id="sd4">Defend her dignity in front of others — including your own son — when it matters.</div></div>
+  </div>
+
+  <div class="sec-title" id="g-saas-dont-title">What a Saas should avoid ❌</div>
+  <div class="wisdom-list">
+    <div class="wisdom-item" style="background:#FEF6F6;border-color:#F5C4C4"><div class="wisdom-dot" style="background:var(--rose)"></div><div class="wisdom-text" id="sa1">Comparing her to your own cooking or habits. Every comparison is a small rejection.</div></div>
+    <div class="wisdom-item" style="background:#FEF6F6;border-color:#F5C4C4"><div class="wisdom-dot" style="background:var(--rose)"></div><div class="wisdom-text" id="sa2">Making financial decisions without including her. She lives there — she deserves to be heard.</div></div>
+    <div class="wisdom-item" style="background:#FEF6F6;border-color:#F5C4C4"><div class="wisdom-dot" style="background:var(--rose)"></div><div class="wisdom-text" id="sa3">Using her love for her parents as criticism. That love does not reduce her love for your home.</div></div>
+  </div>
+
+  <div class="sec-title" id="g-bahu-do-title">What a Bahu can do ✅</div>
+  <div class="wisdom-list">
+    <div class="wisdom-item"><div class="wisdom-dot" style="background:var(--teal)"></div><div class="wisdom-text" id="bd1">Ask her how she makes certain dishes — it is a bridge. Her recipes carry memories.</div></div>
+    <div class="wisdom-item"><div class="wisdom-dot" style="background:var(--teal)"></div><div class="wisdom-text" id="bd2">Acknowledge her sacrifices openly. She gave up a lot too — say it out loud once in a while.</div></div>
+    <div class="wisdom-item"><div class="wisdom-dot" style="background:var(--teal)"></div><div class="wisdom-text" id="bd3">When something bothers you, speak gently and privately — not in the heat of the moment.</div></div>
+    <div class="wisdom-item"><div class="wisdom-dot" style="background:var(--teal)"></div><div class="wisdom-text" id="bd4">Respect the home's rituals and festivals, even if they are not yours. Participation is love made visible.</div></div>
+  </div>
+
+  <div class="sec-title" id="g-bahu-dont-title">What a Bahu should avoid ❌</div>
+  <div class="wisdom-list">
+    <div class="wisdom-item" style="background:#FEF6F6;border-color:#F5C4C4"><div class="wisdom-dot" style="background:var(--rose)"></div><div class="wisdom-text" id="ba1">Treating her as a rival for your husband's attention. He can love both — these loves do not compete.</div></div>
+    <div class="wisdom-item" style="background:#FEF6F6;border-color:#F5C4C4"><div class="wisdom-dot" style="background:var(--rose)"></div><div class="wisdom-text" id="ba2">Venting about family conflicts on social media or to outsiders who cannot help resolve them.</div></div>
+    <div class="wisdom-item" style="background:#FEF6F6;border-color:#F5C4C4"><div class="wisdom-dot" style="background:var(--rose)"></div><div class="wisdom-text" id="ba3">Shutting down emotionally and going silent. Withdrawal feels like rejection to someone trying to connect.</div></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="go('chat',document.getElementById('nav-chat'))" id="guide-cta">Talk to AI guide →</button>
+  </div>
+</div>
+
+<!-- ETHICS -->
+<div class="screen" id="s-ethics">
+  <div style="margin-bottom:14px">
+    <div style="font-family:var(--serif);font-size:19px;color:var(--saffron);margin-bottom:3px" id="ethics-title">Ethics Checker ⚖️</div>
+    <div style="font-size:12px;color:var(--muted)" id="ethics-sub">Describe a situation — AI will reflect honestly on whether it's okay and how to improve.</div>
+  </div>
+  <div class="card" style="margin-bottom:10px">
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px" id="ethics-prompt">Describe what happened or what you are thinking of doing:</div>
+    <textarea class="ethics-ta" id="ethics-text" placeholder="E.g. My saas reads my messages without asking. Is that okay?"></textarea>
+    <div id="ethics-thinking" style="display:none;margin-top:8px"><div class="thinking-bar"></div></div>
+    <button class="check-btn" id="ethics-btn" onclick="checkEthics()">Check this situation</button>
+  </div>
+  <div id="ethics-result"></div>
+
+  <div class="sec-title" id="lbl-common">Common situations</div>
+  <div id="situation-list">
+    <div class="quick-q" onclick="prefill('saas-appearance')"><span style="font-size:14px">👀</span><span id="sit1">Saas comments on Bahu's appearance regularly</span></div>
+    <div class="quick-q" onclick="prefill('bahu-parents')"><span style="font-size:14px">📱</span><span id="sit2">Bahu talks to her parents daily for a long time</span></div>
+    <div class="quick-q" onclick="prefill('private-fights')"><span style="font-size:14px">🤫</span><span id="sit3">Saas shares private fights with other family members</span></div>
+    <div class="quick-q" onclick="prefill('religious')"><span style="font-size:14px">🪔</span><span id="sit4">Bahu does not participate in puja or religious rituals</span></div>
+    <div class="quick-q" onclick="prefill('financial')"><span style="font-size:14px">💍</span><span id="sit5">Financial decisions made without including the Bahu</span></div>
+  </div>
+</div>
+
+<!-- CHAT -->
+<div class="screen" id="s-chat">
+  <div style="margin-bottom:12px">
+    <div style="font-family:var(--serif);font-size:19px;color:var(--rose);margin-bottom:3px" id="chat-title">Ask the Guide 💬</div>
+    <div style="font-size:12px;color:var(--muted)" id="chat-sub">Share your situation. Get honest, warm, culturally aware guidance.</div>
+  </div>
+  <div class="chat-wrap">
+    <div class="chat-msgs" id="chat-msgs">
+      <div class="msg msg-ai">
+        <div class="who">HARMONY GUIDE</div>
+        <span id="chat-welcome">Namaste 🙏 I'm here to help you navigate the Saas-Bahu relationship with honesty and warmth. Are you the Saas or the Bahu? What situation would you like guidance on?</span>
+      </div>
+    </div>
+    <div id="chat-thinking" style="display:none"><div class="thinking-bar"></div></div>
+    <div class="chat-input-row">
+      <textarea class="chat-in" id="chat-in" placeholder="Describe your situation..." rows="1" onkeydown="chatKey(event)"></textarea>
+      <button class="chat-send" id="chat-send" onclick="sendChat()">→</button>
+    </div>
+  </div>
+
+  <div class="sec-title" id="lbl-quick-q">You can ask things like…</div>
+  <div id="quick-list">
+    <div class="quick-q" onclick="quickAsk('dress')">💬 &nbsp;<span id="qq1">My saas criticises how I dress. What do I do?</span></div>
+    <div class="quick-q" onclick="quickAsk('phone')">💬 &nbsp;<span id="qq2">My bahu ignores family time. How do I talk to her?</span></div>
+    <div class="quick-q" onclick="quickAsk('son')">💬 &nbsp;<span id="qq3">My son always sides with his wife. I feel lost.</span></div>
+    <div class="quick-q" onclick="quickAsk('parenting')">💬 &nbsp;<span id="qq4">My saas constantly criticises my parenting.</span></div>
+  </div>
+</div>
+
+<script>
+let lang = 'en';
+let persona = 'none';
+const chatHistory = [{role:'assistant', content:'Namaste 🙏 I\'m here to help you navigate the Saas-Bahu relationship with honesty and warmth. Are you the Saas or the Bahu? What situation would you like guidance on?'}];
+
+// ── Translation strings ─────────────────────────────────────────────────────
+const T = {
+  en: {
+    'logo-text':'Saas–Bahu Harmony',
+    'nav-home':'Home','nav-guide':'Guidance','nav-ethics':'Ethics','nav-chat':'Ask AI',
+    'hero-title':'A home grows stronger when two hearts choose understanding.',
+    'hero-sub':'Guidance for Saas and Bahu — honest, warm, and culturally aware.',
+    'lbl-role':'Who are you today?',
+    'lbl-saas-name':'Saas','lbl-saas-desc':'Mother-in-law',
+    'lbl-bahu-name':'Bahu','lbl-bahu-desc':'Daughter-in-law',
+    'persona-prompt':'Select your role to get personalised guidance',
+    'lbl-foundation':'Foundation of harmony',
+    'f1-title':'Respect flows both ways',
+    'f1-sub':'The bond is strongest when both feel seen — not just tolerated.',
+    'f2-title':'Conflict is normal. Contempt is not.',
+    'f2-sub':'Disagreements can build understanding. Resentment only builds walls.',
+    'f3-title':'She is family — not a guest, not a servant.',
+    'f3-sub':'A Bahu is a new member of the family — not a test to pass.',
+    'lbl-quick':'Quick wisdom',
+    't1-label':'Daily guidance','t1-desc':'Dos and don\'ts for both',
+    't2-label':'Ethics check','t2-desc':'Is this behaviour okay?',
+    't3-label':'Ask the guide','t3-desc':'Talk to AI about your situation',
+    't4-label':'Today\'s wisdom','t4-desc':'A reflection to carry with you',
+    'guide-title':'Daily Guidance','guide-for':'Personalised for',
+    'g-saas-do-title':'What a Saas can do ✅',
+    'sd1':'Give her space to run the home her own way. Your way was right for your time — hers can be right for hers.',
+    'sd2':'Celebrate her small efforts — a meal cooked, a festival prepared. Recognition costs nothing and builds everything.',
+    'sd3':'Ask "how was your day?" genuinely. Be the mother she may not have had access to.',
+    'sd4':'Defend her dignity in front of others — including your own son — when it matters.',
+    'g-saas-dont-title':'What a Saas should avoid ❌',
+    'sa1':'Comparing her to your own cooking or habits. Every comparison is a small rejection.',
+    'sa2':'Making financial decisions without including her. She lives there — she deserves to be heard.',
+    'sa3':'Using her love for her parents as criticism. That love does not reduce her love for your home.',
+    'g-bahu-do-title':'What a Bahu can do ✅',
+    'bd1':'Ask her how she makes certain dishes — it is a bridge. Her recipes carry memories.',
+    'bd2':'Acknowledge her sacrifices openly. She gave up a lot too — say it out loud once in a while.',
+    'bd3':'When something bothers you, speak gently and privately — not in the heat of the moment.',
+    'bd4':'Respect the home\'s rituals and festivals, even if they are not yours. Participation is love made visible.',
+    'g-bahu-dont-title':'What a Bahu should avoid ❌',
+    'ba1':'Treating her as a rival for your husband\'s attention. He can love both — these loves do not compete.',
+    'ba2':'Venting about family conflicts on social media or to outsiders who cannot help resolve them.',
+    'ba3':'Shutting down emotionally and going silent. Withdrawal feels like rejection to someone trying to connect.',
+    'guide-cta':'Talk to AI guide →',
+    'ethics-title':'Ethics Checker ⚖️',
+    'ethics-sub':'Describe a situation — AI will reflect honestly on whether it\'s okay and how to improve.',
+    'ethics-prompt':'Describe what happened or what you are thinking of doing:',
+    'ethics-btn-text':'Check this situation',
+    'ethics-placeholder':'E.g. My saas reads my messages without asking. Is that okay?',
+    'lbl-common':'Common situations',
+    'sit1':'Saas comments on Bahu\'s appearance regularly',
+    'sit2':'Bahu talks to her parents daily for a long time',
+    'sit3':'Saas shares private fights with other family members',
+    'sit4':'Bahu does not participate in puja or religious rituals',
+    'sit5':'Financial decisions made without including the Bahu',
+    'chat-title':'Ask the Guide 💬',
+    'chat-sub':'Share your situation. Get honest, warm, culturally aware guidance.',
+    'chat-welcome':'Namaste 🙏 I\'m here to help you navigate the Saas-Bahu relationship with honesty and warmth. Are you the Saas or the Bahu? What situation would you like guidance on?',
+    'chat-placeholder':'Describe your situation...',
+    'lbl-quick-q':'You can ask things like…',
+    'qq1':'My saas criticises how I dress. What do I do?',
+    'qq2':'My bahu ignores family time. How do I talk to her?',
+    'qq3':'My son always sides with his wife. I feel lost.',
+    'qq4':'My saas constantly criticises my parenting.',
+    'wisdom-label':'Today\'s wisdom',
+    'result-ok':'✅ This is okay','result-reflect':'🔍 Reflect on this','result-concern':'⚠️ Needs attention',
+    'conn-err':'Connection issue — please try again.',
+    'persona-saas':'Saas','persona-bahu':'Bahu','persona-all':'everyone',
+    'persona-selected-saas':'You are viewing as <strong>Saas</strong>. <span style="color:var(--rose);cursor:pointer" onclick="go(\'guide\',document.getElementById(\'nav-guide\'))">Go to Guidance →</span>',
+    'persona-selected-bahu':'You are viewing as <strong>Bahu</strong>. <span style="color:var(--rose);cursor:pointer" onclick="go(\'guide\',document.getElementById(\'nav-guide\'))">Go to Guidance →</span>',
+  },
+  hi: {
+    'logo-text':'सास–बहू सामंजस्य',
+    'nav-home':'होम','nav-guide':'मार्गदर्शन','nav-ethics':'नैतिकता','nav-chat':'AI से पूछें',
+    'hero-title':'घर तब मजबूत होता है जब दो दिल समझ को चुनते हैं।',
+    'hero-sub':'सास और बहू के लिए मार्गदर्शन — ईमानदार, गर्मजोशी भरा और संस्कृति से जुड़ा।',
+    'lbl-role':'आज आप कौन हैं?',
+    'lbl-saas-name':'सास','lbl-saas-desc':'सास माँ',
+    'lbl-bahu-name':'बहू','lbl-bahu-desc':'बहू बेटी',
+    'persona-prompt':'व्यक्तिगत मार्गदर्शन के लिए अपनी भूमिका चुनें',
+    'lbl-foundation':'सामंजस्य की नींव',
+    'f1-title':'सम्मान दोनों तरफ से आता है',
+    'f1-sub':'रिश्ता तब सबसे मजबूत होता है जब दोनों को सुना और सम्मानित महसूस हो।',
+    'f2-title':'मनमुटाव सामान्य है। तिरस्कार नहीं।',
+    'f2-sub':'मतभेद समझ बना सकते हैं। नाराज़गी केवल दीवारें बनाती है।',
+    'f3-title':'वह परिवार है — मेहमान नहीं, नौकर नहीं।',
+    'f3-sub':'बहू एक नई सदस्य है — कोई परीक्षा नहीं।',
+    'lbl-quick':'त्वरित ज्ञान',
+    't1-label':'दैनिक मार्गदर्शन','t1-desc':'दोनों के लिए क्या करें, क्या न करें',
+    't2-label':'नैतिकता जांच','t2-desc':'क्या यह व्यवहार सही है?',
+    't3-label':'मार्गदर्शक से पूछें','t3-desc':'AI से अपनी स्थिति के बारे में बात करें',
+    't4-label':'आज का ज्ञान','t4-desc':'एक विचार जो साथ ले जाएं',
+    'guide-title':'दैनिक मार्गदर्शन','guide-for':'के लिए',
+    'g-saas-do-title':'सास क्या कर सकती हैं ✅',
+    'sd1':'उसे घर अपने तरीके से चलाने की जगह दें। आपका तरीका आपके समय के लिए सही था — उसका उसके समय के लिए।',
+    'sd2':'उसके छोटे प्रयासों की सराहना करें — बना हुआ खाना, मनाया गया त्योहार। प्रशंसा की कोई कीमत नहीं।',
+    'sd3':'सच्चे मन से पूछें "आज का दिन कैसा रहा?" वह माँ बनें जो शायद उसे नहीं मिली।',
+    'sd4':'ज़रूरत पड़ने पर दूसरों के सामने — यहाँ तक कि अपने बेटे के सामने भी — उसकी इज्ज़त की रक्षा करें।',
+    'g-saas-dont-title':'सास को क्या नहीं करना चाहिए ❌',
+    'sa1':'उसकी तुलना अपने खाने या आदतों से करना। हर तुलना एक छोटी-सी अस्वीकृति है।',
+    'sa2':'उसे शामिल किए बिना वित्तीय निर्णय लेना। वह वहाँ रहती है — उसे सुना जाना चाहिए।',
+    'sa3':'उसके माँ-बाप के प्रति प्रेम को आलोचना का हथियार बनाना। वह प्रेम आपके घर से प्यार कम नहीं करता।',
+    'g-bahu-do-title':'बहू क्या कर सकती है ✅',
+    'bd1':'उनसे पूछें कि वे खाना कैसे बनाती हैं — यह एक सेतु है। उनके नुस्खों में यादें हैं।',
+    'bd2':'उनके बलिदानों को खुलकर स्वीकार करें। उन्होंने भी बहुत कुछ छोड़ा — इसे ज़ोर से कहें।',
+    'bd3':'जब कुछ परेशान करे, तो शांति से और निजी तौर पर बात करें — गुस्से के पल में नहीं।',
+    'bd4':'घर के रीति-रिवाजों और त्योहारों का सम्मान करें, भले ही वे आपके न हों। भागीदारी प्रेम का प्रकटीकरण है।',
+    'g-bahu-dont-title':'बहू को क्या नहीं करना चाहिए ❌',
+    'ba1':'उन्हें अपने पति के ध्यान के लिए प्रतिद्वंद्वी मानना। वे दोनों से प्यार कर सकते हैं — यह प्रेम प्रतिस्पर्धा नहीं करते।',
+    'ba2':'सोशल मीडिया पर या बाहरी लोगों से पारिवारिक झगड़ों का बखान करना।',
+    'ba3':'भावनात्मक रूप से बंद हो जाना और चुप रहना। खामोशी उस इंसान को ठुकराना लगती है जो जुड़ने की कोशिश कर रहा है।',
+    'guide-cta':'AI मार्गदर्शक से बात करें →',
+    'ethics-title':'नैतिकता जांच ⚖️',
+    'ethics-sub':'किसी स्थिति का वर्णन करें — AI ईमानदारी से बताएगा कि यह सही है या नहीं।',
+    'ethics-prompt':'जो हुआ या जो करने की सोच रहे हैं वह लिखें:',
+    'ethics-btn-text':'इस स्थिति की जांच करें',
+    'ethics-placeholder':'उदाहरण: मेरी सास बिना पूछे मेरे संदेश पढ़ती हैं। क्या यह सही है?',
+    'lbl-common':'सामान्य स्थितियां',
+    'sit1':'सास बहू के रूप-रंग पर टिप्पणी करती हैं',
+    'sit2':'बहू रोज़ लंबे समय तक माँ-बाप से बात करती है',
+    'sit3':'सास निजी झगड़े दूसरे परिवार के सदस्यों से साझा करती हैं',
+    'sit4':'बहू पूजा या धार्मिक अनुष्ठानों में भाग नहीं लेती',
+    'sit5':'बहू को शामिल किए बिना वित्तीय निर्णय लिए जाते हैं',
+    'chat-title':'मार्गदर्शक से पूछें 💬',
+    'chat-sub':'अपनी स्थिति बताएं। ईमानदार, गर्म और संस्कृति-जागरूक मार्गदर्शन पाएं।',
+    'chat-welcome':'नमस्ते 🙏 मैं आपकी सास-बहू के रिश्ते को ईमानदारी और गर्मजोशी से सुलझाने में मदद करने के लिए यहाँ हूँ। आप सास हैं या बहू? आप किस स्थिति के बारे में मार्गदर्शन चाहती हैं?',
+    'chat-placeholder':'अपनी स्थिति बताएं...',
+    'lbl-quick-q':'आप इस तरह पूछ सकती हैं…',
+    'qq1':'मेरी सास मेरे कपड़ों की आलोचना करती हैं। मैं क्या करूं?',
+    'qq2':'मेरी बहू परिवार के समय पर ध्यान नहीं देती। मैं उससे कैसे बात करूं?',
+    'qq3':'मेरा बेटा हमेशा अपनी पत्नी का पक्ष लेता है। मुझे खोया हुआ महसूस होता है।',
+    'qq4':'मेरी सास लगातार मेरी परवरिश की आलोचना करती हैं।',
+    'wisdom-label':'आज का ज्ञान',
+    'result-ok':'✅ यह ठीक है','result-reflect':'🔍 विचार करें','result-concern':'⚠️ ध्यान दें',
+    'conn-err':'कनेक्शन समस्या — कृपया पुनः प्रयास करें।',
+    'persona-saas':'सास','persona-bahu':'बहू','persona-all':'सभी',
+    'persona-selected-saas':'आप <strong>सास</strong> के रूप में देख रहे हैं। <span style="color:var(--rose);cursor:pointer" onclick="go(\'guide\',document.getElementById(\'nav-guide\'))">मार्गदर्शन देखें →</span>',
+    'persona-selected-bahu':'आप <strong>बहू</strong> के रूप में देख रहे हैं। <span style="color:var(--rose);cursor:pointer" onclick="go(\'guide\',document.getElementById(\'nav-guide\'))">मार्गदर्शन देखें →</span>',
+  }
+};
+
+const SITUATIONS = {
+  'saas-appearance':{en:"My saas makes comments about my weight and appearance regularly. Is that okay?",hi:"मेरी सास नियमित रूप से मेरे वज़न और रूप-रंग पर टिप्पणी करती हैं। क्या यह सही है?"},
+  'bahu-parents':{en:"My bahu talks to her parents every day for a long time. I feel left out.",hi:"मेरी बहू हर रोज़ लंबे समय तक अपने माँ-बाप से बात करती है। मुझे अकेलापन महसूस होता है।"},
+  'private-fights':{en:"My saas tells other family members about our private arguments. Is this right?",hi:"मेरी सास हमारे निजी झगड़े दूसरे परिवार के सदस्यों को बताती हैं। क्या यह सही है?"},
+  'religious':{en:"My bahu does not do puja with us. She says she is not religious. How should I handle this?",hi:"मेरी बहू हमारे साथ पूजा नहीं करती। वह कहती है कि वह धार्मिक नहीं है। मैं इसे कैसे संभालूं?"},
+  'financial':{en:"My saas gives all financial decisions to her son without including me. Is this ethical?",hi:"मेरी सास सभी वित्तीय निर्णय मुझे शामिल किए बिना अपने बेटे को देती हैं। क्या यह नैतिक है?"}
+};
+
+const QUICK = {
+  dress:{en:"My saas and I had a fight over how I dress. She says I should dress more traditionally. How do I handle this respectfully?",hi:"मेरी सास और मेरा इस बात पर झगड़ा हुआ कि मैं कैसे कपड़े पहनती हूँ। मैं इसे सम्मान के साथ कैसे संभालूं?"},
+  phone:{en:"My bahu spends too much time on her phone and ignores family time in the evening. I feel ignored. How should I bring this up?",hi:"मेरी बहू फोन पर बहुत समय बिताती है और शाम को परिवार के साथ नहीं बैठती। मैं इसे कैसे उठाऊं?"},
+  son:{en:"My son always takes his wife's side in arguments. I feel like I have lost my son. How do I deal with this?",hi:"मेरा बेटा झगड़ों में हमेशा अपनी पत्नी का पक्ष लेता है। मुझे लगता है मैंने अपना बेटा खो दिया। मैं क्या करूं?"},
+  parenting:{en:"My saas constantly criticises how I raise my children. I am exhausted. What should I do?",hi:"मेरी सास लगातार मेरी परवरिश की आलोचना करती हैं। मैं थक गई हूँ। मुझे क्या करना चाहिए?"}
+};
+
+function getSys(){
+  return lang==='hi'
+    ?`आप 'सास-बहू सामंजस्य' ऐप में हार्मनी गाइड हैं — एक बुद्धिमान, गर्मजोशी से भरे और सांस्कृतिक रूप से जागरूक AI परामर्शदाता।\n\nनियम:\n- हमेशा हिंदी में जवाब दें\n- ईमानदार, संतुलित और बिना निर्णय के मार्गदर्शन दें\n- भारतीय संयुक्त परिवार की गतिशीलता को गहराई से समझें\n- दोनों पक्षों का सम्मान करें\n- जब कोई गलत हो, करुणा के साथ स्पष्ट रूप से कहें\n- 150 शब्दों से कम में उत्तर दें\n- अंत में एक ठोस कदम बताएं`
+    :`You are the Harmony Guide in the Saas-Bahu Harmony app — a wise, warm, culturally sensitive AI counselor for Indian family relationships.\n\nRules:\n- Always respond in English\n- Honest, balanced, non-judgmental guidance\n- Deeply understand Indian joint family dynamics\n- Respect BOTH parties — no villains\n- When someone is wrong, say so with compassion but clearly\n- Under 150 words unless writing detailed advice\n- End with one concrete actionable step`;
+}
+
+async function callAI(messages, sys){
+  const r = await fetch('/api/chat',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys||getSys(),messages})
+  });
+  const d = await r.json();
+  return d.content?.[0]?.text || T[lang]['conn-err'];
+}
+
+function setLang(l, btn){
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Apply hindi font class to body
+  document.body.classList.toggle('hn', l==='hi');
+
+  // Update all translated elements
+  Object.keys(T[l]).forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    if(id==='persona-prompt'&&persona!=='none') return;
+    if(id.startsWith('persona-selected')) return;
+    if(id==='chat-welcome') { el.textContent = T[l][id]; return; }
+    el.innerHTML = T[l][id];
+  });
+
+  // Update placeholders
+  const ei = document.getElementById('ethics-text');
+  if(ei) ei.placeholder = T[l]['ethics-placeholder'];
+  const ci = document.getElementById('chat-in');
+  if(ci) ci.placeholder = T[l]['chat-placeholder'];
+
+  // Update button text
+  const eb = document.getElementById('ethics-btn');
+  if(eb) eb.textContent = T[l]['ethics-btn-text'];
+
+  // Update input fonts
+  [ei, ci].forEach(el=>{ if(el) el.style.fontFamily = l==='hi'?"'Tiro Devanagari Hindi',serif":''; });
+
+  // Re-apply persona label
+  const lbl = document.getElementById('guide-persona-label');
+  if(lbl) lbl.textContent = persona==='none'?T[l]['persona-all']:(persona==='saas'?T[l]['persona-saas']:T[l]['persona-bahu']);
+
+  if(persona!=='none'){
+    document.getElementById('persona-prompt').innerHTML = T[l]['persona-selected-'+persona];
+  } else {
+    document.getElementById('persona-prompt').textContent = T[l]['persona-prompt'];
+  }
+}
+
+function go(id, btn){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  if(btn&&btn.classList) btn.classList.add('active');
+}
+
+function selectPersona(p){
+  persona = p;
+  document.getElementById('pc-saas').className='persona-card'+(p==='saas'?' sel-saas':'');
+  document.getElementById('pc-bahu').className='persona-card'+(p==='bahu'?' sel-bahu':'');
+  document.getElementById('persona-prompt').innerHTML = T[lang]['persona-selected-'+p];
+  const lbl = document.getElementById('guide-persona-label');
+  lbl.textContent = p==='saas'?T[lang]['persona-saas']:T[lang]['persona-bahu'];
+}
+
+async function loadWisdom(){
+  const el = document.getElementById('wisdom-card');
+  el.innerHTML=`<div class="card card-rose"><div class="dt-wrap"><div class="dt"></div><div class="dt"></div><div class="dt"></div></div></div>`;
+  const prompt = lang==='hi'
+    ?'सास-बहू के रिश्ते के बारे में एक छोटा, सुंदर ज्ञान वाक्य दें। हिंदी में। 2-3 वाक्य। काव्यात्मक और यादगार।'
+    :'Give one short beautiful piece of wisdom about the Saas-Bahu relationship. 2-3 sentences. Poetic and memorable.';
+  try{
+    const r = await callAI([{role:'user',content:prompt}]);
+    el.innerHTML=`<div class="card card-rose"><div class="card-head"><div class="card-icon" style="background:#F2C4CF">✨</div><div><div class="card-title">${T[lang]['wisdom-label']}</div></div></div><div class="card-body" style="font-family:var(--hindi);font-style:italic;font-size:14px;color:var(--rose);line-height:1.7">${r}</div></div>`;
+  }catch(e){el.innerHTML='';}
+}
+
+async function checkEthics(){
+  const text = document.getElementById('ethics-text').value.trim();
+  if(!text) return;
+  const btn = document.getElementById('ethics-btn');
+  const th = document.getElementById('ethics-thinking');
+  btn.disabled=true; th.style.display='block';
+  document.getElementById('ethics-result').innerHTML='';
+  const sys = getSys() + (lang==='hi'
+    ?'\n\nस्थिति का विश्लेषण करें:\n1. फैसला: नैतिक / विचार करें / चिंताजनक\n2. क्यों (2-3 वाक्य)\n3. कैसे सुधारें (1-2 ठोस कदम)\nहमेशा हिंदी में उत्तर दें।'
+    :'\n\nAnalyse this situation:\n1. Verdict: ETHICAL / NEEDS REFLECTION / CONCERN\n2. Why (2-3 sentences, honest but compassionate)\n3. How to improve (1-2 specific actions)\nBe direct but kind.');
+  try{
+    const reply = await callAI([{role:'user',content:text}], sys);
+    const isConcern = /concern|चिंताजनक|गलत|wrong|not okay/i.test(reply);
+    const isOk = !isConcern && /ethical|नैतिक/i.test(reply);
+    const cls = isConcern?'result-concern':isOk?'result-ethical':'result-caution';
+    const lbl = isConcern?T[lang]['result-concern']:isOk?T[lang]['result-ok']:T[lang]['result-reflect'];
+    const col = isConcern?'#C0385A':isOk?'var(--green)':'var(--gold)';
+    document.getElementById('ethics-result').innerHTML=`<div class="result-card ${cls}"><div class="result-label" style="color:${col}">${lbl}</div><div class="result-text">${reply.replace(/\n/g,'<br>')}</div></div>`;
+  }catch(e){
+    document.getElementById('ethics-result').innerHTML=`<div class="result-card" style="background:#fef0f0;border-color:#f5c4c4"><div class="result-text">${T[lang]['conn-err']}</div></div>`;
+  }finally{btn.disabled=false; th.style.display='none';}
+}
+
+function prefill(key){
+  const s = SITUATIONS[key];
+  if(s) document.getElementById('ethics-text').value = s[lang]||s.en;
+  go('ethics', document.getElementById('nav-ethics'));
+}
+
+function addMsg(text, isUser){
+  const box = document.getElementById('chat-msgs');
+  const d = document.createElement('div');
+  d.className = 'msg '+(isUser?'msg-user':'msg-ai');
+  if(!isUser) d.innerHTML=`<div class="who">HARMONY GUIDE</div>${text.replace(/\n/g,'<br>')}`;
+  else d.textContent = text;
+  if(lang==='hi' && !isUser) d.style.fontFamily="'Tiro Devanagari Hindi',serif";
+  if(lang==='hi' && isUser) d.style.fontFamily="'Tiro Devanagari Hindi',serif";
+  box.appendChild(d);
+  d.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+async function sendChat(){
+  const inp = document.getElementById('chat-in');
+  const text = inp.value.trim();
+  if(!text) return;
+  inp.value=''; inp.style.height='';
+  addMsg(text, true);
+  chatHistory.push({role:'user', content:text});
+  const th = document.getElementById('chat-thinking');
+  const btn = document.getElementById('chat-send');
+  th.style.display='block'; btn.disabled=true;
+  try{
+    const reply = await callAI(chatHistory);
+    chatHistory.push({role:'assistant', content:reply});
+    addMsg(reply, false);
+  }catch(e){ addMsg(T[lang]['conn-err'], false); }
+  finally{ th.style.display='none'; btn.disabled=false; }
+}
+
+async function quickAsk(key){
+  go('chat', document.getElementById('nav-chat'));
+  const q = QUICK[key];
+  document.getElementById('chat-in').value = q[lang]||q.en;
+  await sendChat();
+}
+
+function chatKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}
+  const t=e.target; t.style.height='auto'; t.style.height=Math.min(t.scrollHeight,100)+'px';
+}
+</script>
+</body>
+</html>
